@@ -1,0 +1,14 @@
+{
+  "proxy": {
+    "/ws": {
+      "target": "ws://localhost:8282",
+      "ws": true
+    },
+    "/upload": {
+      "target": "http://localhost:8282"
+    },
+    "/files": {
+      "target": "http://localhost:8282"
+    }
+  }
+}
