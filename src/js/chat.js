@@ -55,7 +55,7 @@ export default class Chat {
     }
 
     socketOnMessage(data) {
-        console.log(data);
+        //console.log(data);
         const type = data.type;
         if (type) {
             switch (type) {
@@ -66,23 +66,25 @@ export default class Chat {
                     break;
                 case 'login':
                     this.user.addToList(data.from);
-                    this.messageField.addSystemMessageToChat({'text': `${data.from}  зашел в чат`});
+                    this.messageField.addSystemMessageToChat({'text': `${data.from} зашел в чат`});
                     break;
                 case 'logout':
                     this.user.deleteFromList(data.from);
-                    this.messageField.addSystemMessageToChat({'text': `${data.from}  покинул чат`});
+                    this.messageField.addSystemMessageToChat({'text': `${data.from} покинул чат`});
                     break;
                 case 'text':
-                    this.messageField.addMessageToChat({'name': data.from, 'text': data.text})
+                    this.messageField.addMessageToChat({'name': data.from, 'text': data.text});
                     break;
-
+                case 'photo-changed':
+                    this.userPhoto.setAllPhoto(data.data.name);
+                    break;
             }
         }
 
     }
 
     upload(data) {
-        fetch('http://localhost:8282/upload', {
+        fetch('/upload', {
             method: 'POST',
             mode: 'no-cors',
             body: JSON.stringify({
@@ -92,7 +94,7 @@ export default class Chat {
         })
             .then(response => {
                 this.photoWindow.hide();
-                this.userPhoto.setPhoto(this.user.getName());
+                this.userPhoto.setAllPhoto(this.user.getName());
                 this.chatWindow.show();
             })
             .catch(err => console.error(err));

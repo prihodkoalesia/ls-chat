@@ -8,7 +8,10 @@
       "target": "http://localhost:8282"
     },
     "/files": {
-      "target": "http://localhost:8282"
+      "target": "http://localhost:8282",
+      "pathRewrite": {
+        "^/": ""
+      }
     }
   }
 }

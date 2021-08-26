@@ -9,13 +9,24 @@ export default class Photo {
         this.input.addEventListener('change', function (e) {
             const file = e.target.files[0];
             if (file) {
-                if (file.size > 300 * 1024) {
-                    alert('Слишком большой файл');
-                } else {
-                    fileReader.readAsDataURL(file);
-                }
+                fileReader.readAsDataURL(file);
             }
         });
+
+        this.tempPhoto.addEventListener('dragover', (e) => {
+            if (e.dataTransfer.items.length && e.dataTransfer.items[0].kind === 'file') {
+                e.preventDefault();
+            }
+        });
+
+        this.tempPhoto.addEventListener('drop', (e) => {
+            const file = e.dataTransfer.items[0].getAsFile();
+            if (file) {
+                fileReader.readAsDataURL(file);
+            }
+            e.preventDefault();
+        });
+
         fileReader.addEventListener('load', () => {
             this.fileReaderResult = fileReader.result;
             this.tempPhoto.style.backgroundImage = `url(${this.fileReaderResult})`;
@@ -31,8 +42,14 @@ export default class Photo {
     }
 
     setPhoto(name) {
-        this.element.style.backgroundImage = `url(/files/${name}.png?v=${Date.now()})`;
+        this.element.style.backgroundImage = `url(/files/${name}.png)`;
     }
 
-
+    setAllPhoto(name) {
+        this.elements = document.querySelectorAll(`[data-role="user-photo"][data-name="${name}"]`);
+        console.log(this.elements);
+        this.elements.forEach((element) => {
+            element.style.backgroundImage = `url(/files/${name}.png?v=${Date.now()})`
+        });
+    }
 }

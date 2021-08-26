@@ -4,6 +4,15 @@ const miniCss = require('mini-css-extract-plugin');
 const UglifyJsPlugin = require('uglifyjs-webpack-plugin');
 const rules = require('./webpack.config.rules')();
 const path = require('path');
+const fs = require("fs");
+
+const proxy = {};
+const settingsPath = './settings.json';
+
+if (fs.existsSync(settingsPath)) {
+    const settings = require(settingsPath);
+    Object.assign(proxy, settings.proxy);
+}
 
 rules.push({
     test:/\.(s*)css$/,
@@ -19,7 +28,7 @@ module.exports = {
         index: './src/index.js',
     },
     devServer: {
-        index: 'index.html'
+        proxy,
     },
     output: {
         filename: 'js/[name].[fullhash].js',

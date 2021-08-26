@@ -1,6 +1,6 @@
 {{#each list}}
     <div class="user">
-        <div class="user__pic"></div>
+        <div class="user__pic" data-name="{{this}}" data-role="user-photo" style="background-image: url(/files/{{this}}.png)"></div>
         <div class="user__name">{{this}}</div>
     </div>
 {{/each}}

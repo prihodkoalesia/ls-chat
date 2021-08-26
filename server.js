@@ -17,7 +17,7 @@ const server = http.createServer(async (req, res) => {
     try {
         if (/\/files\/.+\.png/.test(req.url)) {
             const [, imageName] = req.url.match(/\/files\/(.+\.png)/) || [];
-            const fallBackPath = path.resolve(__dirname, './no-photo.png');
+            const fallBackPath = path.resolve(__dirname, './files/no.png');
             const filePath = path.resolve(__dirname, './files', imageName);
 
             if (fs.existsSync(filePath)) {
@@ -41,7 +41,6 @@ const server = http.createServer(async (req, res) => {
         }
         res.end('ok');
     } catch (e) {
-        console.error(e);
         res.end('fail');
     }
 });

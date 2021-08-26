@@ -3,12 +3,14 @@ import getHtmlList from '../templates/list.hbs';
 export default class User {
     constructor() {
         this.nameField = document.querySelector('[data-role="current-user-name"]');
+        this.phtoField = document.querySelector('#current-user [data-role="user-photo"]');
         this.items = new Set();
     }
 
     setName(name) {
         this.name = name;
         this.nameField.textContent = name;
+        this.phtoField.setAttribute('data-name', name);
     }
 
     getName() {

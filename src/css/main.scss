@@ -192,9 +192,11 @@ body {
     color: #658FB7;
   }
 
-  &__ {
-  }
+}
 
+[data-role="user-photo"]{
+  background-position: center;
+  background-size: cover;
 }
 
 .photo {
